@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CarDetails from "./CarDetails";
 
-function Car({ car, onClick, onDelete }) {
+// Car component
+function Car({ car, onClick, onDelete, addCar }) {
   return (
     <div
       onClick={() => onClick(car)}
@@ -25,7 +26,25 @@ function Car({ car, onClick, onDelete }) {
 
       <button
         onClick={(e) => {
-        
+          e.stopPropagation();
+          addCar(car); // ✅ duplicate this car
+        }}
+        style={{
+          backgroundColor: "#4b0082",
+          color: "#fff",
+          border: "none",
+          padding: "5px 10px",
+          borderRadius: "5px",
+          cursor: "pointer",
+          marginRight: "10px",
+        }}
+      >
+        Add Car
+      </button>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
           onDelete(car.id);
         }}
         style={{
@@ -55,8 +74,7 @@ export default function DisplayCarList() {
             color: "Blue",
             year: 2022,
             price: "$22,000",
-            description:
-              "A reliable compact sedan known for great fuel efficiency...",
+            description: "A reliable compact sedan...",
           },
           {
             id: 2,
@@ -64,8 +82,7 @@ export default function DisplayCarList() {
             color: "White",
             year: 2023,
             price: "$21,500",
-            description:
-              "A globally trusted sedan offering comfort, durability...",
+            description: "A globally trusted sedan...",
           },
         ];
   });
@@ -76,12 +93,22 @@ export default function DisplayCarList() {
     localStorage.setItem("cars", JSON.stringify(cars));
   }, [cars]);
 
+  // ✅ Add new (duplicate) car
+  function addCar(car) {
+    const newCar = {
+      ...car,
+      id: Date.now(), // unique ID
+    };
+    setCars([...cars, newCar]);
+  }
+
+  // ✅ Delete car
   function deleteCar(id) {
     const updatedCars = cars.filter((car) => car.id !== id);
     setCars(updatedCars);
 
     if (selectedCar && selectedCar.id === id) {
-      setSelectedCar(null); 
+      setSelectedCar(null);
     }
   }
 
@@ -99,6 +126,7 @@ export default function DisplayCarList() {
         boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
       }}
     >
+      {/* Car List Panel */}
       <div style={{ flex: 1 }}>
         <h2
           style={{
@@ -120,11 +148,13 @@ export default function DisplayCarList() {
               car={car}
               onClick={setSelectedCar}
               onDelete={deleteCar}
+              addCar={addCar}
             />
           ))
         )}
       </div>
 
+      {/* Car Details Panel */}
       <div
         style={{
           flex: 2,
