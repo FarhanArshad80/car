@@ -1,257 +1,450 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CarDetails from "./CarDetails";
 
-// Car component function
-function Car({ car, onClick, onDelete, addCar }) {
+const starterCars = [
+  {
+    id: 1,
+    name: "Honda Civic",
+    color: "Blue",
+    year: 2022,
+    price: "$22,000",
+    type: "Sedan",
+    mileage: "18,420 mi",
+    description:
+      "A dependable, efficient sedan with a refined cabin, confident handling and everyday practicality.",
+  },
+  {
+    id: 2,
+    name: "Toyota Corolla",
+    color: "White",
+    year: 2023,
+    price: "$21,500",
+    type: "Sedan",
+    mileage: "12,800 mi",
+    description:
+      "A smart and comfortable commuter with legendary reliability, modern safety tech and excellent value.",
+  },
+  {
+    id: 3,
+    name: "Ford Mustang",
+    color: "Red",
+    year: 2021,
+    price: "$36,000",
+    type: "Coupe",
+    mileage: "21,100 mi",
+    description:
+      "An iconic performance coupe with bold styling, thrilling acceleration and unmistakable character.",
+  },
+  {
+    id: 4,
+    name: "Tesla Model S",
+    color: "Midnight Silver",
+    year: 2024,
+    price: "$89,990",
+    type: "Electric",
+    mileage: "4,650 mi",
+    description:
+      "A luxurious electric sedan pairing instant performance with a minimalist, technology-first interior.",
+  },
+  {
+    id: 5,
+    name: "BMW 3 Series",
+    color: "Dark Gray",
+    year: 2022,
+    price: "$43,000",
+    type: "Luxury",
+    mileage: "16,300 mi",
+    description:
+      "German engineering, balanced handling and a premium interior in one timeless sports sedan.",
+  },
+  {
+    id: 6,
+    name: "Kia Sportage",
+    color: "Green",
+    year: 2023,
+    price: "$27,000",
+    type: "SUV",
+    mileage: "9,870 mi",
+    description:
+      "A stylish and spacious SUV ready for city life, family weekends and everything between.",
+  },
+];
+
+const styles = {
+  section: {
+    padding: "20px 0 0",
+  },
+
+  card: {
+    background: "#0c192b",
+    border: "1px solid #1e293b",
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+
+  button: {
+    border: 0,
+    borderRadius: 10,
+    padding: "11px 15px",
+    cursor: "pointer",
+    fontWeight: 800,
+    fontSize: 13,
+  },
+};
+
+function getInitialCars() {
+  try {
+    const savedCars = localStorage.getItem("veloce-cars");
+
+    if (savedCars) {
+      return JSON.parse(savedCars);
+    }
+
+    return starterCars;
+  } catch {
+    return starterCars;
+  }
+}
+
+function CarCard({ car, selected, onSelect, onAdd, onDelete }) {
+  const isRedCar = car.color.toLowerCase() === "red";
+
   return (
-    <div
-      onClick={() => onClick(car)}
+    <article
+      onClick={() => onSelect(car)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          onSelect(car);
+        }
+      }}
+      tabIndex={0}
       style={{
+        ...styles.card,
         cursor: "pointer",
-        padding: "15px 20px",
-        borderRadius: "10px",
-        marginBottom: "15px",
-        backgroundColor: "#f5f5f5",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
-        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-        borderLeft: "6px solid #4b0082",
+        borderColor: selected ? "#d7ff3f" : "#1e293b",
+        transition: "transform .2s, border-color .2s",
+        transform: selected ? "translateY(-3px)" : "none",
       }}
     >
-      <h3 style={{ margin: "0", color: "#333", fontSize: "1.2rem" }}>{car.name}</h3>
-      <p style={{ color: "#666", fontSize: "0.9rem" }}>
-        {car.year} • {car.color} • {car.price}
-      </p>
-
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          addCar(car); // ✅ duplicate this car
-        }}
+      {/* Car Banner */}
+      <div
         style={{
-          backgroundColor: "#4b0082",
-          color: "#fff",
-          border: "none",
-          padding: "5px 10px",
-          borderRadius: "5px",
-          cursor: "pointer",
-          marginRight: "10px",
+          height: 130,
+          padding: 20,
+          display: "flex",
+          alignItems: "end",
+          background: `linear-gradient(
+            135deg,
+            ${isRedCar ? "#5b1720" : "#13263b"},
+            #0c192b
+          )`,
         }}
       >
-        Add Car
-      </button>
+        <span
+          style={{
+            color: "#d7ff3f",
+            fontSize: 12,
+            fontWeight: 900,
+            textTransform: "uppercase",
+            letterSpacing: 1,
+          }}
+        >
+          {car.type}
+        </span>
+      </div>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onDelete(car.id);
-        }}
-        style={{
-          backgroundColor: "#4b0082",
-          color: "#fff",
-          border: "none",
-          padding: "5px 10px",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Delete
-      </button>
-    </div>
+      {/* Car Information */}
+      <div style={{ padding: 20 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: 10,
+          }}
+        >
+          <div>
+            <h3
+              style={{
+                margin: 0,
+                fontSize: 18,
+              }}
+            >
+              {car.name}
+            </h3>
+
+            <p
+              style={{
+                color: "#64748b",
+                margin: "7px 0 0",
+                fontSize: 13,
+              }}
+            >
+              {car.year} · {car.color} · {car.mileage}
+            </p>
+          </div>
+
+          <strong
+            style={{
+              color: "#d7ff3f",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {car.price}
+          </strong>
+        </div>
+
+        {/* Actions */}
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            marginTop: 18,
+          }}
+        >
+          <button
+            style={{
+              ...styles.button,
+              background: "#d7ff3f",
+              color: "#07111f",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              onAdd(car);
+            }}
+          >
+            Duplicate
+          </button>
+
+          <button
+            style={{
+              ...styles.button,
+              background: "#17263a",
+              color: "#cbd5e1",
+            }}
+            onClick={(event) => {
+              event.stopPropagation();
+              onDelete(car.id);
+            }}
+          >
+            Remove
+          </button>
+        </div>
+      </div>
+    </article>
   );
 }
 
 export default function DisplayCarList() {
-  const [cars, setCars] = useState(() => {
-    const stored = localStorage.getItem("cars");
-    return stored
-      ? JSON.parse(stored)
-      : [
-          {
-            id: 1,
-            name: "Honda Civic",
-            color: "Blue",
-            year: 2022,
-            price: "$22,000",
-            description:
-              "A reliable compact sedan known for great fuel efficiency and affordability. The Honda Civic combines sleek design, impressive fuel economy, and a smooth ride. With spacious interiors, advanced safety features, and a reputation for long-term dependability, it’s a favorite among urban drivers and commuters alike.",
-          },
-          {
-            id: 2,
-            name: "Toyota Corolla",
-            color: "White",
-            year: 2023,
-            price: "$21,500",
-            description:
-              "A globally trusted sedan offering comfort, durability, and great resale value. The Toyota Corolla is perfect for families and professionals looking for a low-maintenance vehicle with advanced driver-assistance systems, modern infotainment, and exceptional build quality that lasts for years.",
-          },
-          {
-            id: 3,
-            name: "Ford Mustang",
-            color: "Red",
-            year: 2021,
-            price: "$36,000",
-            description:
-              "An iconic American muscle car with bold looks and powerful performance. The Mustang roars with attitude, featuring aggressive styling, a powerful V8 engine, rear-wheel drive, and thrilling acceleration. It’s more than a car — it’s a legacy on wheels for driving enthusiasts.",
-          },
-          {
-            id: 4,
-            name: "Chevrolet Camaro",
-            color: "Black",
-            year: 2020,
-            price: "$35,500",
-            description:
-              "A sporty performance coupe that delivers thrills with a distinctive style. The Chevrolet Camaro boasts bold aesthetics, precise handling, and a range of powerful engine options. Whether you’re cruising the boulevard or hitting the track, this car is built to impress and perform.",
-          },
-          {
-            id: 5,
-            name: "Tesla Model S",
-            color: "Midnight Silver",
-            year: 2024,
-            price: "$89,990",
-            description:
-              "A luxury electric sedan offering top-tier performance and cutting-edge tech. The Tesla Model S features unmatched electric range, ludicrous acceleration, a minimalist interior with a massive touchscreen, and autonomous driving capabilities. It’s a glimpse into the future of high-performance driving.",
-          },
-          {
-            id: 6,
-            name: "BMW 3 Series",
-            color: "Dark Gray",
-            year: 2022,
-            price: "$43,000",
-            description:
-              "A premium sedan blending driving pleasure with German engineering excellence. The BMW 3 Series delivers precise steering, balanced handling, and a refined interior packed with luxury touches. It’s a top choice for professionals seeking a blend of performance, prestige, and comfort.",
-          },
-          {
-            id: 7,
-            name: "Audi A4",
-            color: "Silver",
-            year: 2023,
-            price: "$41,200",
-            description:
-              "A refined sedan offering a smooth drive, elegant design, and modern features. The Audi A4 showcases quattro all-wheel drive, a sleek and quiet cabin, advanced infotainment, and smooth power delivery. It’s designed to offer a premium feel without compromising on agility.",
-          },
-          {
-            id: 8,
-            name: "Mercedes-Benz C-Class",
-            color: "Metallic Black",
-            year: 2022,
-            price: "$44,500",
-            description:
-              "A classy executive car that balances comfort, tech, and prestige. The Mercedes C-Class includes leather interiors, ambient lighting, MBUX voice controls, and refined suspension for a buttery-smooth ride. It brings sophistication to your daily drives and stands as a status symbol worldwide.",
-          },
-          {
-            id: 9,
-            name: "Kia Sportage",
-            color: "Green",
-            year: 2023,
-            price: "$27,000",
-            description:
-              "A compact SUV known for practicality, style, and value-packed features. The Kia Sportage offers great ground clearance, spacious interiors, modern tech like a digital cockpit, and a strong warranty. Whether in the city or on an adventure, it’s a dependable and stylish companion.",
-          },
-          {
-            id: 10,
-            name: "Hyundai Elantra",
-            color: "White",
-            year: 2023,
-            price: "$20,000",
-            description:
-              "A sleek and efficient compact car with modern design and technology. The Hyundai Elantra impresses with its sharp exterior, roomy cabin, user-friendly infotainment, and great mileage. Ideal for students, small families, and anyone seeking affordable sophistication with a tech-savvy edge.",
-          },
-        ];
-  });
-
+  const [cars, setCars] = useState(getInitialCars);
   const [selectedCar, setSelectedCar] = useState(null);
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("All");
 
   useEffect(() => {
-    localStorage.setItem("cars", JSON.stringify(cars));
+    localStorage.setItem("veloce-cars", JSON.stringify(cars));
   }, [cars]);
 
-  // ✅ Add new (duplicate) car
+  const categories = ["All", ...new Set(cars.map((car) => car.type))];
+
+  const filteredCars = useMemo(() => {
+    return cars.filter((car) => {
+      const searchableText = `${car.name} ${car.color} ${car.type}`;
+
+      const matchesQuery = searchableText
+        .toLowerCase()
+        .includes(query.toLowerCase());
+
+      const matchesFilter = filter === "All" || car.type === filter;
+
+      return matchesQuery && matchesFilter;
+    });
+  }, [cars, query, filter]);
+
   function addCar(car) {
-    const newCar = {
+    const duplicateCar = {
       ...car,
-      id: Date.now(), // unique ID
+      id: Date.now(),
+      name: `${car.name} (New)`,
     };
-    setCars([...cars, newCar]);
+
+    setCars((currentCars) => [...currentCars, duplicateCar]);
+    setSelectedCar(duplicateCar);
   }
 
-  // ✅ Delete car
   function deleteCar(id) {
-    const updatedCars = cars.filter((car) => car.id !== id);
-    setCars(updatedCars);
-    if (selectedCar && selectedCar.id === id) {
-      setSelectedCar(null);
-    }
+    setCars((currentCars) =>
+      currentCars.filter((car) => car.id !== id)
+    );
+
+    setSelectedCar((currentCar) =>
+      currentCar?.id === id ? null : currentCar
+    );
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: "40px",
-        padding: "40px",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        backgroundColor: "#ffffffdd",
-        borderRadius: "12px",
-        boxShadow: "0 4px 30px rgba(0,0,0,0.1)",
-      }}
-    >
-      {/* Car List Panel */}
-      <div style={{ flex: 1 }}>
-        <h2
-          style={{
-            fontSize: "2.5rem",
-            color: "#4b0082",
-            marginBottom: "20px",
-            borderBottom: "2px solid #ccc",
-            paddingBottom: "10px",
-          }}
-        >
-          Available Cars
-        </h2>
-
-        {cars.length === 0 ? (
-          <p style={{ color: "#888", fontStyle: "italic" }}>No cars available.</p>
-        ) : (
-          cars.map((car) => (
-            <Car
-              key={car.id}
-              car={car}
-              onClick={setSelectedCar}
-              onDelete={deleteCar}
-              addCar={addCar}
-            />
-          ))
-        )}
-      </div>
-
-      {/* Car Details Panel */}
+    <section style={styles.section}>
       <div
         style={{
-          flex: 2,
-          backgroundColor: "#f9f9f9",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-          minHeight: "300px",
+          width: "min(1180px, calc(100% - 40px))",
+          margin: "0 auto",
         }}
       >
-        {selectedCar ? (
-          <CarDetails car={selectedCar} />
-        ) : (
-          <p
+        {/* Heading and Search */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "end",
+            gap: 20,
+            flexWrap: "wrap",
+            marginBottom: 22,
+          }}
+        >
+          <div>
+            <p
+              style={{
+                color: "#64748b",
+                margin: 0,
+                fontSize: 13,
+              }}
+            >
+              {cars.length} vehicles in collection
+            </p>
+
+            <h2
+              style={{
+                fontSize: 30,
+                margin: "8px 0 0",
+                letterSpacing: -1,
+              }}
+            >
+              Browse inventory
+            </h2>
+          </div>
+
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search vehicles..."
+            aria-label="Search vehicles"
             style={{
-              color: "#777",
-              fontSize: "1.4rem",
-              textAlign: "center",
-              paddingTop: "50px",
+              width: "min(100%, 270px)",
+              padding: "13px 16px",
+              borderRadius: 11,
+              border: "1px solid #334155",
+              background: "#0c192b",
+              color: "#fff",
+              outline: "none",
+            }}
+          />
+        </div>
+
+        {/* Category Filters */}
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            overflowX: "auto",
+            paddingBottom: 20,
+          }}
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setFilter(category)}
+              style={{
+                ...styles.button,
+                background:
+                  filter === category ? "#d7ff3f" : "#17263a",
+                color:
+                  filter === category ? "#07111f" : "#cbd5e1",
+              }}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Main Content */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "minmax(0, 1.2fr) minmax(300px, .8fr)",
+            gap: 20,
+            alignItems: "start",
+          }}
+        >
+          {/* Car Cards */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(245px, 1fr))",
+              gap: 14,
             }}
           >
-            👈 Click on a car to view its details
-          </p>
-        )}
+            {filteredCars.map((car) => (
+              <CarCard
+                key={car.id}
+                car={car}
+                selected={selectedCar?.id === car.id}
+                onSelect={setSelectedCar}
+                onAdd={addCar}
+                onDelete={deleteCar}
+              />
+            ))}
+
+            {filteredCars.length === 0 && (
+              <p
+                style={{
+                  color: "#94a3b8",
+                  padding: 20,
+                }}
+              >
+                No vehicles match your search.
+              </p>
+            )}
+          </div>
+
+          {/* Details Panel */}
+          <div
+            style={{
+              position: "sticky",
+              top: 96,
+            }}
+          >
+            {selectedCar ? (
+              <CarDetails car={selectedCar} />
+            ) : (
+              <div
+                style={{
+                  ...styles.card,
+                  padding: 30,
+                  minHeight: 250,
+                  display: "grid",
+                  placeItems: "center",
+                  textAlign: "center",
+                  color: "#64748b",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: 36,
+                      marginBottom: 12,
+                    }}
+                  >
+                    ↗
+                  </div>
+
+                  <p>Select a vehicle to view its full profile.</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
