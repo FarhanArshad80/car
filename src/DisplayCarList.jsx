@@ -5,83 +5,53 @@ import CarDetails from "./CarDetails";
 const defaultCars = [
   {
     id: 1,
-    name: "Porsche 911",
-    color: "Guards Red",
-    year: 2024,
-    price: "$124,900",
-    type: "Performance",
-    mileage: "3,420 mi",
-    engine: "3.0L Twin-Turbo",
-    power: "379 HP",
+    name: "Honda Civic",
+    color: "Blue",
+    year: 2022,
+    price: "$22,000",
+    type: "Sedan",
+    mileage: "18,420 mi",
+    engine: "1.5L Turbo",
+    power: "180 HP",
     image:
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=90",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85",
     description:
-      "An iconic sports car engineered for pure driving emotion. The Porsche 911 combines timeless design, precision handling and thrilling performance.",
+      "A dependable and efficient sedan with a refined cabin, confident handling, modern safety features and comfortable everyday driving.",
   },
   {
     id: 2,
-    name: "BMW 3 Series",
-    color: "Mineral Grey",
+    name: "Toyota Corolla",
+    color: "White",
     year: 2023,
-    price: "$48,500",
-    type: "Luxury",
-    mileage: "11,280 mi",
-    engine: "2.0L Turbocharged",
-    power: "255 HP",
+    price: "$21,500",
+    type: "Sedan",
+    mileage: "12,800 mi",
+    engine: "2.0L Petrol",
+    power: "169 HP",
     image:
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=90",
+      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?auto=format&fit=crop&w=1200&q=85",
     description:
-      "A sophisticated sports sedan that blends German engineering, premium comfort and confident everyday performance.",
+      "A smart and comfortable family sedan known for outstanding reliability, excellent fuel economy and low ownership costs.",
   },
   {
     id: 3,
-    name: "Range Rover Sport",
-    color: "Santorini Black",
-    year: 2024,
-    price: "$92,800",
-    type: "SUV",
-    mileage: "6,890 mi",
-    engine: "3.0L Turbocharged",
-    power: "355 HP",
+    name: "Ford Mustang",
+    color: "Red",
+    year: 2021,
+    price: "$36,000",
+    type: "Coupe",
+    mileage: "21,100 mi",
+    engine: "5.0L V8",
+    power: "450 HP",
     image:
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=90",
+      "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=85",
     description:
-      "A commanding luxury SUV with an elegant interior, advanced technology and the confidence to go anywhere.",
+      "An iconic American muscle car with aggressive styling, powerful acceleration, rear-wheel drive and unmistakable road presence.",
   },
   {
     id: 4,
-    name: "Mercedes-Benz S-Class",
-    color: "Obsidian Black",
-    year: 2023,
-    price: "$118,000",
-    type: "Executive",
-    mileage: "8,540 mi",
-    engine: "3.0L Inline-6",
-    power: "429 HP",
-    image:
-      "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=90",
-    description:
-      "The definition of executive luxury, offering a serene cabin, intelligent technology and effortless performance.",
-  },
-  {
-    id: 5,
-    name: "Audi R8",
-    color: "Daytona Grey",
-    year: 2022,
-    price: "$164,900",
-    type: "Performance",
-    mileage: "5,120 mi",
-    engine: "5.2L V10",
-    power: "602 HP",
-    image:
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1200&q=90",
-    description:
-      "A dramatic V10 supercar that delivers breathtaking acceleration, quattro grip and unmistakable road presence.",
-  },
-  {
-    id: 6,
     name: "Tesla Model S",
-    color: "Pearl White",
+    color: "Midnight Silver",
     year: 2024,
     price: "$89,990",
     type: "Electric",
@@ -89,9 +59,39 @@ const defaultCars = [
     engine: "Dual Motor Electric",
     power: "670 HP",
     image:
-      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=90",
+      "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1200&q=85",
     description:
-      "A futuristic electric sedan with instant acceleration, long-range capability and a beautifully minimal cabin.",
+      "A luxurious electric sedan with instant acceleration, long-range capability, intelligent technology and a minimalist premium interior.",
+  },
+  {
+    id: 5,
+    name: "BMW 3 Series",
+    color: "Dark Gray",
+    year: 2022,
+    price: "$43,000",
+    type: "Luxury",
+    mileage: "16,300 mi",
+    engine: "2.0L Turbo",
+    power: "255 HP",
+    image:
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=85",
+    description:
+      "A premium sports sedan blending German engineering, balanced handling, elegant styling and an intelligently designed interior.",
+  },
+  {
+    id: 6,
+    name: "Kia Sportage",
+    color: "Green",
+    year: 2023,
+    price: "$27,000",
+    type: "SUV",
+    mileage: "9,870 mi",
+    engine: "2.5L Petrol",
+    power: "187 HP",
+    image:
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=85",
+    description:
+      "A stylish and spacious SUV offering modern technology, comfortable seating, practical storage and confident road performance.",
   },
 ];
 
@@ -100,11 +100,23 @@ function getInitialCars() {
     const savedCars = localStorage.getItem("veloce-cars");
 
     if (savedCars) {
-      return JSON.parse(savedCars);
+      const parsedCars = JSON.parse(savedCars);
+
+      return parsedCars.map((car, index) => {
+        const matchingDefault = defaultCars.find(
+          (defaultCar) => defaultCar.name === car.name
+        );
+
+        return {
+          ...(matchingDefault || defaultCars[index % defaultCars.length]),
+          ...car,
+          id: car.id || Date.now() + index,
+        };
+      });
     }
 
     return defaultCars;
-  } catch (error) {
+  } catch {
     return defaultCars;
   }
 }
@@ -121,24 +133,26 @@ export default function DisplayCarList() {
 
   const categories = [
     "All",
-    ...new Set(cars.map((car) => car.type)),
+    ...new Set(cars.map((car) => car.type || "Other")),
   ];
 
   const filteredCars = useMemo(() => {
     return cars.filter((car) => {
-      const searchableContent = `
+      const searchableText = `
         ${car.name}
         ${car.color}
         ${car.type}
         ${car.year}
+        ${car.description}
       `.toLowerCase();
 
-      const matchesSearch = searchableContent.includes(
+      const matchesSearch = searchableText.includes(
         query.toLowerCase()
       );
 
       const matchesFilter =
-        activeFilter === "All" || car.type === activeFilter;
+        activeFilter === "All" ||
+        (car.type || "Other") === activeFilter;
 
       return matchesSearch && matchesFilter;
     });
@@ -151,7 +165,11 @@ export default function DisplayCarList() {
       name: `${car.name} Edition`,
     };
 
-    setCars((currentCars) => [...currentCars, duplicatedCar]);
+    setCars((currentCars) => [
+      ...currentCars,
+      duplicatedCar,
+    ]);
+
     setSelectedCar(duplicatedCar);
   }
 
@@ -225,7 +243,9 @@ export default function DisplayCarList() {
             <div className="empty-state">
               <span>⌕</span>
               <h3>No vehicles found</h3>
-              <p>Try another search term or category.</p>
+              <p>
+                Try another search term or category.
+              </p>
             </div>
           )}
         </div>
@@ -237,7 +257,9 @@ export default function DisplayCarList() {
         ) : (
           <div className="empty-details">
             <div className="empty-details-icon">↗</div>
+
             <h3>Select a vehicle</h3>
+
             <p>
               Click any vehicle card to see its full specifications.
             </p>

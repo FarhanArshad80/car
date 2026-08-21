@@ -1,6 +1,13 @@
 import React from "react";
 
 export default function CarDetails({ car }) {
+  function handleImageError(event) {
+    event.currentTarget.style.display = "none";
+    event.currentTarget.parentElement.classList.add(
+      "details-image-fallback"
+    );
+  }
+
   function handleInquiry() {
     window.alert(
       `Thank you for your interest in the ${car.name}. Our team will contact you shortly.`
@@ -11,10 +18,19 @@ export default function CarDetails({ car }) {
     <article className="car-details">
       <div className="details-image-wrapper">
         <img
-          src={car.image}
-          alt={car.name}
+          src={
+            car.image ||
+            "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85"
+          }
+          alt={`${car.name} vehicle`}
           className="details-image"
+          onError={handleImageError}
         />
+
+        <div className="details-image-fallback-content">
+          <span>VELOCE MOTORS</span>
+          <strong>{car.name}</strong>
+        </div>
 
         <div className="details-image-overlay"></div>
 
@@ -33,7 +49,9 @@ export default function CarDetails({ car }) {
             <h2>{car.name}</h2>
 
             <p className="details-subtitle">
-              {car.year} {car.type} · {car.color}
+              {car.year || "2024"}{" "}
+              {car.type || "Premium"} ·{" "}
+              {car.color || "Premium finish"}
             </p>
           </div>
 
@@ -45,7 +63,7 @@ export default function CarDetails({ car }) {
         <div className="details-price-row">
           <div>
             <span>Starting price</span>
-            <strong>{car.price}</strong>
+            <strong>{car.price || "Price on request"}</strong>
           </div>
 
           <div className="details-rating">
@@ -56,28 +74,29 @@ export default function CarDetails({ car }) {
         </div>
 
         <p className="details-description">
-          {car.description}
+          {car.description ||
+            "A carefully selected premium vehicle offering comfort, quality, style and dependable performance."}
         </p>
 
         <div className="details-specifications">
           <div>
             <span>Year</span>
-            <strong>{car.year}</strong>
+            <strong>{car.year || "2024"}</strong>
           </div>
 
           <div>
             <span>Mileage</span>
-            <strong>{car.mileage}</strong>
+            <strong>{car.mileage || "Low mileage"}</strong>
           </div>
 
           <div>
             <span>Engine</span>
-            <strong>{car.engine}</strong>
+            <strong>{car.engine || "Premium tuned"}</strong>
           </div>
 
           <div>
             <span>Power</span>
-            <strong>{car.power}</strong>
+            <strong>{car.power || "Performance spec"}</strong>
           </div>
         </div>
 
