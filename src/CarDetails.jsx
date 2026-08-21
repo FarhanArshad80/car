@@ -1,169 +1,94 @@
 import React from "react";
 
 export default function CarDetails({ car }) {
+  function handleInquiry() {
+    window.alert(
+      `Thank you for your interest in the ${car.name}. Our team will contact you shortly.`
+    );
+  }
+
   return (
-    <article
-      style={{
-        background: "#d7ff3f",
-        color: "#07111f",
-        borderRadius: 22,
-        padding: 28,
-        boxShadow: "0 20px 50px rgba(215,255,63,.08)",
-      }}
-    >
-      {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "start",
-          gap: 15,
-        }}
-      >
-        <span
-          style={{
-            fontSize: 12,
-            fontWeight: 900,
-            letterSpacing: 1.5,
-            textTransform: "uppercase",
-          }}
-        >
-          Selected vehicle
-        </span>
+    <article className="car-details">
+      <div className="details-image-wrapper">
+        <img
+          src={car.image}
+          alt={car.name}
+          className="details-image"
+        />
 
-        <span
-          style={{
-            border: "1px solid rgba(7,17,31,.25)",
-            borderRadius: 30,
-            padding: "6px 10px",
-            fontSize: 11,
-            fontWeight: 800,
-          }}
-        >
-          IN STOCK
-        </span>
-      </div>
+        <div className="details-image-overlay"></div>
 
-      {/* Vehicle Name */}
-      <h2
-        style={{
-          fontSize: "clamp(2rem, 4vw, 3rem)",
-          lineHeight: 1,
-          letterSpacing: -2,
-          margin: "42px 0 8px",
-        }}
-      >
-        {car.name}
-      </h2>
-
-      <p
-        style={{
-          opacity: 0.65,
-          margin: 0,
-        }}
-      >
-        {car.year} {car.type} · {car.color}
-      </p>
-
-      <div
-        style={{
-          height: 1,
-          background: "rgba(7,17,31,.2)",
-          margin: "26px 0",
-        }}
-      />
-
-      {/* Specifications */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "20px 12px",
-        }}
-      >
-        <div>
-          <small style={{ opacity: 0.6 }}>Price</small>
-          <strong
-            style={{
-              display: "block",
-              fontSize: 20,
-              marginTop: 4,
-            }}
-          >
-            {car.price}
-          </strong>
-        </div>
-
-        <div>
-          <small style={{ opacity: 0.6 }}>Mileage</small>
-          <strong
-            style={{
-              display: "block",
-              fontSize: 20,
-              marginTop: 4,
-            }}
-          >
-            {car.mileage || "Low mileage"}
-          </strong>
-        </div>
-
-        <div>
-          <small style={{ opacity: 0.6 }}>Exterior</small>
-          <strong
-            style={{
-              display: "block",
-              marginTop: 4,
-            }}
-          >
-            {car.color}
-          </strong>
-        </div>
-
-        <div>
-          <small style={{ opacity: 0.6 }}>Category</small>
-          <strong
-            style={{
-              display: "block",
-              marginTop: 4,
-            }}
-          >
-            {car.type || "Premium"}
-          </strong>
+        <div className="details-badge">
+          Available now
         </div>
       </div>
 
-      {/* Description */}
-      <p
-        style={{
-          lineHeight: 1.7,
-          margin: "26px 0 0",
-          opacity: 0.78,
-        }}
-      >
-        {car.description}
-      </p>
+      <div className="details-content">
+        <div className="details-header">
+          <div>
+            <p className="details-eyebrow">
+              Selected vehicle
+            </p>
 
-      {/* Contact Button */}
-      <button
-        style={{
-          width: "100%",
-          marginTop: 26,
-          padding: 14,
-          border: 0,
-          borderRadius: 11,
-          background: "#07111f",
-          color: "#fff",
-          fontWeight: 800,
-          cursor: "pointer",
-        }}
-        onClick={() =>
-          window.alert(
-            `Thanks for your interest in the ${car.name}.`
-          )
-        }
-      >
-        Request information →
-      </button>
+            <h2>{car.name}</h2>
+
+            <p className="details-subtitle">
+              {car.year} {car.type} · {car.color}
+            </p>
+          </div>
+
+          <div className="details-status">
+            ● In stock
+          </div>
+        </div>
+
+        <div className="details-price-row">
+          <div>
+            <span>Starting price</span>
+            <strong>{car.price}</strong>
+          </div>
+
+          <div className="details-rating">
+            <span>★</span>
+            <strong>4.9</strong>
+            <small>Owner rating</small>
+          </div>
+        </div>
+
+        <p className="details-description">
+          {car.description}
+        </p>
+
+        <div className="details-specifications">
+          <div>
+            <span>Year</span>
+            <strong>{car.year}</strong>
+          </div>
+
+          <div>
+            <span>Mileage</span>
+            <strong>{car.mileage}</strong>
+          </div>
+
+          <div>
+            <span>Engine</span>
+            <strong>{car.engine}</strong>
+          </div>
+
+          <div>
+            <span>Power</span>
+            <strong>{car.power}</strong>
+          </div>
+        </div>
+
+        <button
+          className="details-action-button"
+          onClick={handleInquiry}
+        >
+          Request information
+          <span>→</span>
+        </button>
+      </div>
     </article>
   );
 }

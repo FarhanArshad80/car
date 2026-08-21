@@ -1,274 +1,194 @@
 import React from "react";
 import DisplayCarList from "./DisplayCarList";
+import MaintenanceCard from "./MaintenanceCard";
+import "./styles.css";
 
 const maintenanceTips = [
-  [
-    "01",
-    "Check fluids",
-    "Inspect oil, coolant, brake fluid and windshield washer fluid regularly.",
-  ],
-  [
-    "02",
-    "Protect the finish",
-    "A regular wash and wax helps preserve your car’s paint and resale value.",
-  ],
-  [
-    "03",
-    "Watch the tires",
-    "Keep tires inflated correctly and rotate them every 5,000–8,000 miles.",
-  ],
+  {
+    number: "01",
+    icon: "🔧",
+    title: "Check your fluids",
+    text: "Inspect engine oil, coolant, brake fluid and windshield washer fluid regularly.",
+  },
+  {
+    number: "02",
+    icon: "✨",
+    title: "Protect the finish",
+    text: "Regular washing and waxing helps preserve your car’s paint and resale value.",
+  },
+  {
+    number: "03",
+    icon: "🛞",
+    title: "Watch the tires",
+    text: "Keep tires properly inflated and rotate them every 5,000–8,000 miles.",
+  },
 ];
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    color: "#f8fafc",
-    background: "#07111f",
-    fontFamily:
-      "Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-  },
-
-  shell: {
-    width: "min(1180px, calc(100% - 40px))",
-    margin: "0 auto",
-  },
-};
 
 export default function App() {
   return (
-    <main style={styles.page}>
-      {/* Navigation */}
-      <header
-        style={{
-          borderBottom: "1px solid rgba(255,255,255,.1)",
-          background: "rgba(7,17,31,.86)",
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          backdropFilter: "blur(18px)",
-        }}
-      >
-        <div
-          style={{
-            ...styles.shell,
-            height: 76,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 20,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-            }}
-          >
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                display: "grid",
-                placeItems: "center",
-                borderRadius: 12,
-                background: "#d7ff3f",
-                color: "#07111f",
-                fontWeight: 900,
-                fontSize: 20,
-              }}
-            >
-              V
-            </div>
+    <main className="app">
+      {/* Navbar */}
+      <header className="navbar">
+        <div className="container navbar-content">
+          <div className="brand">
+            <div className="brand-mark">V</div>
 
-            <strong
-              style={{
-                letterSpacing: 2,
-                fontSize: 15,
-              }}
-            >
-              VELOCE MOTORS
-            </strong>
+            <div>
+              <h2>VELOCE</h2>
+              <span>MOTORS</span>
+            </div>
           </div>
 
-          <span
-            style={{
-              color: "#94a3b8",
-              fontSize: 13,
-            }}
-          >
-            Premium vehicles · Curated for you
-          </span>
+          <nav className="nav-links">
+            <a href="#inventory">Inventory</a>
+            <a href="#maintenance">Maintenance</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <button className="nav-button">Book a Test Drive</button>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section
-        style={{
-          ...styles.shell,
-          padding: "78px 0 42px",
-        }}
-      >
-        <p
-          style={{
-            color: "#d7ff3f",
-            fontWeight: 800,
-            letterSpacing: 2,
-            fontSize: 12,
-            textTransform: "uppercase",
-            margin: 0,
-          }}
-        >
-          The art of driving
-        </p>
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-glow hero-glow-one"></div>
+        <div className="hero-glow hero-glow-two"></div>
 
-        <h1
-          style={{
-            maxWidth: 720,
-            fontSize: "clamp(2.8rem, 7vw, 5.8rem)",
-            lineHeight: 0.95,
-            letterSpacing: -4,
-            margin: "18px 0",
-            fontWeight: 900,
-          }}
-        >
-          Find a car that{" "}
-          <span style={{ color: "#d7ff3f" }}>feels like you.</span>
-        </h1>
+        <div className="container hero-content">
+          <div className="hero-copy">
+            <p className="eyebrow fade-up">Premium automotive collection</p>
 
-        <p
-          style={{
-            color: "#94a3b8",
-            maxWidth: 560,
-            lineHeight: 1.7,
-            fontSize: 17,
-            margin: 0,
-          }}
-        >
-          Explore a carefully selected collection of reliable daily drivers,
-          luxury sedans and performance icons.
-        </p>
-      </section>
+            <h1 className="hero-title fade-up delay-one">
+              DRIVE
+              <br />
+              <span>YOUR LEGACY.</span>
+            </h1>
 
-      {/* Car Inventory */}
-      <DisplayCarList />
-
-      {/* Maintenance Section */}
-      <section
-        style={{
-          ...styles.shell,
-          padding: "76px 0 110px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "end",
-            justifyContent: "space-between",
-            gap: 24,
-            marginBottom: 24,
-            flexWrap: "wrap",
-          }}
-        >
-          <div>
-            <p
-              style={{
-                color: "#d7ff3f",
-                fontWeight: 800,
-                letterSpacing: 2,
-                fontSize: 12,
-                textTransform: "uppercase",
-                margin: 0,
-              }}
-            >
-              Care guide
+            <p className="hero-description fade-up delay-two">
+              Discover a refined collection of performance, luxury and
+              everyday vehicles designed for people who expect more.
             </p>
 
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 4vw, 3.2rem)",
-                margin: "10px 0 0",
-                letterSpacing: -2,
-              }}
-            >
-              Keep it running beautifully.
-            </h2>
+            <div className="hero-actions fade-up delay-three">
+              <a href="#inventory" className="gold-button">
+                Explore Collection
+                <span>→</span>
+              </a>
+
+              <a href="#maintenance" className="text-button">
+                View our care guide
+                <span>↗</span>
+              </a>
+            </div>
           </div>
 
-          <p
-            style={{
-              color: "#64748b",
-              maxWidth: 300,
-              lineHeight: 1.6,
-              margin: 0,
-            }}
-          >
-            Small habits make a big difference to performance, safety and
-            value.
-          </p>
+          <div className="hero-visual fade-in delay-two">
+            <div className="hero-ring"></div>
+
+            <img
+              src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=90"
+              alt="Luxury sports car"
+              className="hero-car-image"
+            />
+
+            <div className="hero-image-overlay"></div>
+
+            <div className="hero-floating-card">
+              <span className="floating-label">Featured model</span>
+              <strong>Porsche 911</strong>
+              <small>Performance redefined</small>
+            </div>
+          </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: 14,
-          }}
-        >
-          {maintenanceTips.map(([number, title, text]) => (
-            <article
-              key={number}
-              style={{
-                padding: 24,
-                border: "1px solid #1e293b",
-                borderRadius: 20,
-                background: "#0c192b",
-              }}
-            >
-              <span
-                style={{
-                  color: "#d7ff3f",
-                  fontWeight: 900,
-                }}
-              >
-                {number}
-              </span>
+        <div className="hero-scroll">
+          <span></span>
+          Scroll to explore
+        </div>
+      </section>
 
-              <h3
-                style={{
-                  margin: "28px 0 10px",
-                  fontSize: 19,
-                }}
-              >
-                {title}
-              </h3>
+      {/* Inventory */}
+      <section id="inventory" className="inventory-section">
+        <div className="container">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Our collection</p>
+              <h2>Find your next statement.</h2>
+            </div>
 
-              <p
-                style={{
-                  color: "#94a3b8",
-                  lineHeight: 1.6,
-                  fontSize: 14,
-                  margin: 0,
-                }}
-              >
-                {text}
-              </p>
-            </article>
-          ))}
+            <p className="section-intro">
+              Every vehicle is selected for its character, condition and
+              ability to make every journey memorable.
+            </p>
+          </div>
+
+          <DisplayCarList />
+        </div>
+      </section>
+
+      {/* Maintenance */}
+      <section id="maintenance" className="maintenance-section">
+        <div className="container">
+          <div className="section-heading maintenance-heading">
+            <div>
+              <p className="eyebrow">Ownership guide</p>
+              <h2>Keep it exceptional.</h2>
+            </div>
+
+            <p className="section-intro">
+              A little attention goes a long way. Follow these simple habits
+              to keep your vehicle performing at its best.
+            </p>
+          </div>
+
+          <div className="maintenance-grid">
+            {maintenanceTips.map((tip) => (
+              <MaintenanceCard key={tip.number} tip={tip} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section id="contact" className="contact-section">
+        <div className="container contact-box">
+          <div>
+            <p className="eyebrow">Ready when you are</p>
+            <h2>Your next chapter starts here.</h2>
+          </div>
+
+          <button
+            className="gold-button"
+            onClick={() =>
+              window.alert("Our team will contact you shortly.")
+            }
+          >
+            Contact our team
+            <span>→</span>
+          </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer
-        style={{
-          borderTop: "1px solid #1e293b",
-          color: "#64748b",
-          textAlign: "center",
-          padding: 28,
-          fontSize: 13,
-        }}
-      >
-        © 2025 Veloce Motors · Drive something memorable.
+      <footer className="footer">
+        <div className="container footer-content">
+          <div className="brand footer-brand">
+            <div className="brand-mark">V</div>
+
+            <div>
+              <h2>VELOCE</h2>
+              <span>MOTORS</span>
+            </div>
+          </div>
+
+          <p>© 2025 Veloce Motors. Drive something unforgettable.</p>
+
+          <div className="footer-socials">
+            <span>Instagram</span>
+            <span>Facebook</span>
+            <span>LinkedIn</span>
+          </div>
+        </div>
       </footer>
     </main>
   );
